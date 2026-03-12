@@ -104,8 +104,8 @@ function AddProductCard({onClose}) {
   const [selectedCathegory, setSelectedCathegory] = useState(null)
   console.log(selectedCathegory)
   return (
-    <div className='absolute inset-0 backdrop-blur bg-gray-200/60' onClick={onClose}>
-      <Card className={`w-80 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 shadow-md`}>
+    <div className='absolute flex items-center justify-center inset-0 backdrop-blur bg-gray-200/60' onClick={onClose}>
+      <Card onClick={(e) => e.stopPropagation()} className={`w-80 shadow-md`}>
         <CardHeader>
           <div className='w-full flex justify-between'>
             <CardTitle>Tambahkan Produk Baru</CardTitle>
@@ -155,8 +155,8 @@ function AddProductCard({onClose}) {
 
 function AddCathegoryCard({onClose}) {
   return (
-    <div className='absolute inset-0 backdrop-blur bg-gray-200/60' onClick={onClose}>
-      <Card className={`w-80 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 shadow-md`}>
+    <div className='absolute flex items-center justify-center inset-0 backdrop-blur bg-gray-200/60' onClick={onClose}>
+      <Card onClick={(e) => e.stopPropagation()} className={`w-80 shadow-md`}>
         <CardHeader>
           <div className='w-full flex justify-between'>
             <CardTitle>Tambahkan Kategori Baru</CardTitle>
