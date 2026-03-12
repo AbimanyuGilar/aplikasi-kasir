@@ -37,15 +37,16 @@ const ProductCard = ({img_url, price, name}) => {
 
 const Home = () => {
   const [selectedCathegory, setSelectedCathegory] = useState(null)
+  const [searchInput, setSearchInput] = useState(null)
   return (
     <>
       <header className='w-full flex flex-col gap-3'>
         <h1 className='font-bold text-2xl'>Tambah Transaksi</h1>
-          <SearchBar placeholder="Cari produk..."/>
+          <SearchBar placeholder="Cari produk..." onChange={(e) => setSearchInput(e.target.value)}/>
           <div className='flex gap-2 overflow-x-auto no-scrollbar'>
-            <Badge variant={`${!selectedCathegory ? 'default': 'outline'}`} onClick={() => setSelectedCathegory(null)}>Semua</Badge>
+            <Badge className={`cursor-pointer`} variant={`${!selectedCathegory ? 'default': 'outline'}`} onClick={() => setSelectedCathegory(null)}>Semua</Badge>
             {cathegoryData.map((item, index) => (
-              <Badge key={index} variant={`${selectedCathegory === item.name ? 'default' : 'outline'}`} onClick={() => setSelectedCathegory(item.name)}>{item.name}</Badge>
+              <Badge className={`cursor-pointer`} key={index} variant={`${selectedCathegory === item.name ? 'default' : 'outline'}`} onClick={() => setSelectedCathegory(item.name)}>{item.name}</Badge>
             ))}
           </div>
       </header>
@@ -53,14 +54,18 @@ const Home = () => {
       <div className='flex-1 overflow-y-auto no-scrollbar mt-3 px-1 py-1'>
         <div className='grid md:grid-cols-3 lg:grid-cols-4 grid-cols-2 gap-3 w-full'>
           {
-            selectedCathegory 
-            ? products.map((item, index) => {
-              if (item.cathegory === selectedCathegory) {
-                return <ProductCard key={index} img_url={item.img_url} price={item.price} name={item.name} />
-              }
-              return null
-            })
-            : products.map((item, index) => <ProductCard key={index} img_url={item.img_url} price={item.price} name={item.name} />)
+            products.filter((item) => {
+              const matchCategory = !selectedCathegory || item.cathegory === selectedCathegory;
+              const matchSearch = item.name.toLowerCase().includes(searchInput.toLowerCase());
+              return matchCategory && matchSearch;
+            }).map((item, index) => (
+              <ProductCard 
+                key={index} 
+                img_url={item.img_url} 
+                price={item.price} 
+                name={item.name} 
+              />
+            ))
           }
         </div>
       </div>
