@@ -108,7 +108,7 @@ function AddProductCard({onClose}) {
       <Card onClick={(e) => e.stopPropagation()} className={`w-80 shadow-md`}>
         <CardHeader>
           <div className='w-full flex justify-between'>
-            <CardTitle>Tambahkan Produk Baru</CardTitle>
+            <CardTitle className={`text-xl font-bold`}>Tambahkan Produk Baru</CardTitle>
             <Button variant='ghost' onClick={onClose}>
               <X/>
             </Button>
@@ -159,7 +159,7 @@ function AddCathegoryCard({onClose}) {
       <Card onClick={(e) => e.stopPropagation()} className={`w-80 shadow-md`}>
         <CardHeader>
           <div className='w-full flex justify-between'>
-            <CardTitle>Tambahkan Kategori Baru</CardTitle>
+            <CardTitle className={`text-xl font-bold`}>Tambahkan Kategori Baru</CardTitle>
             <Button variant='ghost' onClick={onClose}>
               <X/>
             </Button>
@@ -202,7 +202,7 @@ export default function Products () {
           <h1 className="text-xl font-bold tracking-tight">Manajemen Produk</h1>
         </div>
         
-        <div className='flex gap-2'>
+        <div className='flex flex-col md:flex-row gap-2'>
           <Button className="flex gap-2" onClick={() => setIsAddProductOpen(true)}>
             <Plus className="h-4 w-4" />
             Produk
