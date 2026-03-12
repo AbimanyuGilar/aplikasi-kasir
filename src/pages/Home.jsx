@@ -56,7 +56,7 @@ const Home = () => {
           {
             products.filter((item) => {
               const matchCategory = !selectedCathegory || item.cathegory === selectedCathegory;
-              const matchSearch = item.name.toLowerCase().includes(searchInput.toLowerCase());
+              const matchSearch = !searchInput || item.name.toLowerCase().includes(searchInput.toLowerCase());
               return matchCategory && matchSearch;
             }).map((item, index) => (
               <ProductCard 
