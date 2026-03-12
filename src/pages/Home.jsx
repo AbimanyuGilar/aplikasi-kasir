@@ -49,7 +49,7 @@ const Home = () => {
       </header>
       
       <div className='flex-1 overflow-y-auto no-scrollbar mt-3 px-1 py-1'>
-        <div className='grid md:grid-cols-3 grid-cols-2 gap-3 w-full'>
+        <div className='grid md:grid-cols-3 lg:grid-cols-4 grid-cols-2 gap-3 w-full'>
           <ProductCard />
           <ProductCard />
           <ProductCard />

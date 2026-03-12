@@ -1,4 +1,6 @@
-import * as React from "react"
+import { useState } from "react"
+import { ArrowUpDown, ChevronDown } from "lucide-react"
+import { SearchBar } from "@/components/ui/search-bar"
 
 import {
   Table,
@@ -14,11 +16,44 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  getSortedRowModel,
+  getFilteredRowModel
 } from '@tanstack/react-table'
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import { Button } from "@/components/ui/button"
 
-export default function TableData({data, columns, pageSize}) {
+export default function TableData({data, columns, pageSize, searchFilter, filter}) {
+  const [sorting, setSorting] = useState([])
+
+  const [columnFilters, setColumnFilters] = useState([])
+
+  columns = columns.map(((col) => (
+    {
+      ...col, 
+      header: col.short 
+        ? ({column}) => (
+            <Button
+              variant="ghost"
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+              {col.header}
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          )
+        : col.header
+    }
+  )))
+
   const table = useReactTable(
     {
       data,
@@ -29,6 +64,14 @@ export default function TableData({data, columns, pageSize}) {
         pagination: {
           pageSize,
         },
+      },
+      onSortingChange: setSorting,
+      getSortedRowModel: getSortedRowModel(),
+      onColumnFiltersChange: setColumnFilters,
+      getFilteredRowModel: getFilteredRowModel(),
+      state: {
+        sorting,
+        columnFilters,
       },
     }
   )
@@ -51,9 +94,46 @@ export default function TableData({data, columns, pageSize}) {
     console.log(range)
     return range
   }
-
+  
   return (
     <>
+      <div className="flex gap-3"> 
+        {searchFilter && (
+          <SearchBar
+            placeholder="Cari Produk..."
+            value={(table.getColumn(searchFilter)?.getFilterValue()) ?? ""}
+            onChange={(event) =>
+              table.getColumn(searchFilter)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+          )
+        }
+        {
+          filter.column && filter.data && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button className='group' variant="outline">
+                  {table.getColumn(filter.column)?.getFilterValue() ?? filter.title ?? "Filter"}
+                  <ChevronDown className="transition duration-300 group-data-[state=open]:rotate-180"/>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuGroup>
+                  {
+                    filter.default && (
+                      <DropdownMenuItem key="0" onClick={() => {table.getColumn(filter.column)?.setFilterValue(undefined)}}>{filter.default}</DropdownMenuItem>
+                    )
+                  }
+                  {filter.data.map((item, index) => (
+                    <DropdownMenuItem key={index+1} onClick={() => {table.getColumn(filter.column)?.setFilterValue(item)}}>{item}</DropdownMenuItem>
+                  ))}
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )
+        }
+      </div>
       <Table>
         <TableHeader>
           { table.getHeaderGroups().map(headerGroup => (

@@ -8,6 +8,12 @@ import {
 import TableData from '@/components/ui/table-data'
 import {Button} from '@/components/ui/button'
 
+const cathegory = [
+  "Makanan",
+  "Minuman",
+  "Perawatan",
+]
+
 const data = [
   {
     id: "1",
@@ -55,11 +61,13 @@ const columns = [
     header: "Nama"
   },
   {
+    accessorKey: "cathegory",
+    header: "Kategori"
+  },
+  {
     accessorKey: "price",
-    header: () => <p className='hidden md:block'>Harga</p>,
-    cell: ({row}) => (
-      <p className='hidden md:block'>{row.original.price}</p>
-    )
+    header: "Harga",
+    short: true,
   },
   {
     header: "Aksi",
@@ -73,6 +81,13 @@ const columns = [
 ]
 
 export default function Products () {
+  const filter = {
+    title: 'Filter kategori', 
+    column: 'cathegory', 
+    data: cathegory,
+    default: 'Semua'
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -86,7 +101,7 @@ export default function Products () {
         </Button>
       </div>
 
-        <TableData data={data} columns={columns} pageSize={5} />
+        <TableData searchFilter='name' filter={filter} data={data} columns={columns} pageSize={5} />
     </div>
   )
 }
