@@ -25,8 +25,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -90,8 +88,6 @@ export default function TableData({data, columns, pageSize, searchFilter, filter
         range.push("...")
       }
     })
-    console.log(allPage)
-    console.log(range)
     return range
   }
   

@@ -1,12 +1,32 @@
+import { useState } from 'react'
 import { 
   Image as DefaultImage,
   Trash2 as Trash,
   SquarePen as Edit,
-  Plus
+  Plus,
+  ChevronDown,
+  X
 } from 'lucide-react'
-
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import TableData from '@/components/ui/table-data'
 import {Button} from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 const cathegory = [
   "Makanan",
@@ -80,7 +100,94 @@ const columns = [
   },
 ]
 
+function AddProductCard({onClose}) {
+  const [selectedCathegory, setSelectedCathegory] = useState(null)
+  console.log(selectedCathegory)
+  return (
+    <div className='absolute inset-0 backdrop-blur bg-gray-200/60' onClick={onClose}>
+      <Card className={`w-80 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 shadow-md`}>
+        <CardHeader>
+          <div className='w-full flex justify-between'>
+            <CardTitle>Tambahkan Produk Baru</CardTitle>
+            <Button variant='ghost' onClick={onClose}>
+              <X/>
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <form action="">
+            <div className='flex flex-col gap-2'>
+              <div className='grid gap-2'>
+                <Label htmlFor="name">Nama Produk</Label>
+                <div className='flex gap-2'>
+                  <Input id="name" />
+                  <div className='grid gap-2'>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant='outline' className={`group`}>
+                          {selectedCathegory ?? 'Kategori'}
+                          <ChevronDown className="transition duration-300 group-data-[state=open]:rotate-180"/>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        {cathegory.map((item, index) => (
+                          <DropdownMenuItem key={index} onClick={() => setSelectedCathegory(item)}>{item}</DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                </div>
+              </div>
+              <div className='grid gap-2'>
+                <Label htmlFor="price">Harga</Label>
+                <Input id="price" type={`number`} />
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter>
+          <Button className={`w-full`}>Tambah</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  )
+}
+
+function AddCathegoryCard({onClose}) {
+  return (
+    <div className='absolute inset-0 backdrop-blur bg-gray-200/60' onClick={onClose}>
+      <Card className={`w-80 absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 shadow-md`}>
+        <CardHeader>
+          <div className='w-full flex justify-between'>
+            <CardTitle>Tambahkan Kategori Baru</CardTitle>
+            <Button variant='ghost' onClick={onClose}>
+              <X/>
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <form action="">
+            <div className='flex flex-col gap-2'>
+              <div className='grid gap-2'>
+                <Label htmlFor="name">Nama Kategori</Label>
+                <Input id="name" />
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter>
+          <Button className={`w-full`}>Tambah</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  )
+}
+
 export default function Products () {
+  const [isAddProductOpen, setIsAddProductOpen] = useState(false)
+  const [isAddCathegoryOpen, setIsAddCathegoryOpen] = useState(false)
+  
+
   const filter = {
     title: 'Filter kategori', 
     column: 'cathegory', 
@@ -95,13 +202,22 @@ export default function Products () {
           <h1 className="text-xl font-bold tracking-tight">Manajemen Produk</h1>
         </div>
         
-        <Button className="flex gap-2">
-          <Plus className="h-4 w-4" />
-          Tambah Produk
-        </Button>
+        <div className='flex gap-2'>
+          <Button className="flex gap-2" onClick={() => setIsAddProductOpen(true)}>
+            <Plus className="h-4 w-4" />
+            Produk
+          </Button>
+          <Button variant='outline' className="flex gap-2" onClick={() => setIsAddCathegoryOpen(true)}>
+            <Plus className="h-4 w-4" />
+            Kategori
+          </Button>
+        </div>
       </div>
 
-        <TableData searchFilter='name' filter={filter} data={data} columns={columns} pageSize={5} />
+      <TableData searchFilter='name' filter={filter} data={data} columns={columns} pageSize={5} />
+
+      { isAddProductOpen && <AddProductCard onClose={() => setIsAddProductOpen(false)}/> }
+      { isAddCathegoryOpen && <AddCathegoryCard onClose={() => setIsAddCathegoryOpen(false)}/> }
     </div>
   )
 }
