@@ -25,35 +25,30 @@ const products = [
     name: 'Panadol Extra',
     cathegory: "Obat",
     price: 15000,
-    img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUhIEOpEBie-LYpu0KOJUPokK5A0qM1wj6iw&s'
   },
   {
     id: "5",
     name: 'Hot Wheels Basic Car',
     cathegory: "Mainan",
     price: 35000,
-    img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUhIEOpEBie-LYpu0KOJUPokK5A0qM1wj6iw&s'
   },
   {
     id: "6",
     name: 'Teh Botol Sosro 450ml',
     cathegory: "Minuman",
     price: 8000,
-    img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUhIEOpEBie-LYpu0KOJUPokK5A0qM1wj6iw&s'
   },
   {
     id: "7",
     name: 'Indomie Goreng Aceh',
     cathegory: "Makanan",
     price: 3500,
-    img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUhIEOpEBie-LYpu0KOJUPokK5A0qM1wj6iw&s'
   },
   {
     id: "8",
     name: 'Pepsodent White 190g',
     cathegory: "Perawatan",
     price: 22000,
-    img_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUhIEOpEBie-LYpu0KOJUPokK5A0qM1wj6iw&s'
   }
 ]
 
