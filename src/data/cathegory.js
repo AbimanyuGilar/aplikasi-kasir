@@ -16,4 +16,4 @@ const cathegory = [
   },
 ]
 
-export default cathegory
+export default cathegory  

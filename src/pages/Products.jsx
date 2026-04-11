@@ -91,6 +91,37 @@ function AddProductCard({onClose}) {
   )
 }
 
+function DeleteProductCard({onClose, id}) {
+  const [selectedProduct, setSelectedProduct] = useState(products.find(item => item.id === id))
+
+  return (
+    <div className='absolute flex items-center justify-center inset-0 backdrop-blur bg-gray-200/60' onClick={onClose}>
+      <Card onClick={(e) => e.stopPropagation()} className={`w-80 shadow-md`}>
+        <CardHeader>
+          <div className='w-full flex justify-between'>
+            <CardTitle className={`text-xl font-bold`}>Konfirmasi Hapus Produk</CardTitle>
+            <Button variant='ghost' onClick={onClose}>
+              <X/>
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <form action="">
+            <div className='flex flex-col gap-2'>
+              <div className='grid gap-2'>
+                <p>Hapus produk {selectedProduct.name}?</p>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter>
+          <Button className={`w-full bg-red-500 cursor-pointer hover:shadow-md`} >Hapus</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  )
+}
+
 function EditProductCard({onClose, id}) {
   const [prevProduct, setPrevProduct] = useState(products.find(item => item.id === id))
   const [selectedCathegory, setSelectedCathegory] = useState(prevProduct.cathegory)
@@ -183,11 +214,18 @@ function handleEdit(setIsOpenFunction, setProductIdFunction, id) {
   setProductIdFunction(id)
 }
 
+function handleDelete(setIsOpenFunction, setProductIdFunction, id) {
+  setIsOpenFunction(true)
+  setProductIdFunction(id)
+}
+
 export default function Products () {
   const [isAddProductOpen, setIsAddProductOpen] = useState(false)
   const [isAddCathegoryOpen, setIsAddCathegoryOpen] = useState(false)
   const [isEditProductOpen, setIsEditProductOpen] = useState(false)
   const [editProductId, setEditProductId] = useState(null)
+  const [isDeleteProductOpen, setIsDeleteProductOpen] = useState(false)
+  const [deleteProductId, setDeleteProductId] = useState(null)
 
   const columns = [
     {
@@ -225,7 +263,7 @@ export default function Products () {
       cell: ({row}) => (
         <div className='flex gap-2'>
           <Edit className='scale-80 text-yellow-300' onClick={() => handleEdit(setIsEditProductOpen, setEditProductId, row.original.id)} />
-          <Trash className='scale-80 text-red-500' />
+          <Trash className='scale-80 text-red-500' onClick={() => handleDelete(setIsDeleteProductOpen, setDeleteProductId, row.original.id)} />
         </div>
       )
     },
@@ -262,6 +300,7 @@ export default function Products () {
       { isAddProductOpen && <AddProductCard onClose={() => setIsAddProductOpen(false)}/> }
       { isAddCathegoryOpen && <AddCathegoryCard onClose={() => setIsAddCathegoryOpen(false)}/> }
       { isEditProductOpen && <EditProductCard id={editProductId} onClose={() => setIsEditProductOpen(false)}/> }
+      { isDeleteProductOpen && <DeleteProductCard id={deleteProductId} onClose={() => setIsDeleteProductOpen(false)}/> }
     </div>
   )
 }
