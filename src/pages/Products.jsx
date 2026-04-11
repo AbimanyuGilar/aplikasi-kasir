@@ -262,8 +262,8 @@ export default function Products () {
       header: "Aksi",
       cell: ({row}) => (
         <div className='flex gap-2'>
-          <Edit className='scale-80 text-yellow-300' onClick={() => handleEdit(setIsEditProductOpen, setEditProductId, row.original.id)} />
-          <Trash className='scale-80 text-red-500' onClick={() => handleDelete(setIsDeleteProductOpen, setDeleteProductId, row.original.id)} />
+          <Edit className='scale-80 text-yellow-300 cursor-pointer' onClick={() => handleEdit(setIsEditProductOpen, setEditProductId, row.original.id)} />
+          <Trash className='scale-80 text-red-500 cursor-pointer' onClick={() => handleDelete(setIsDeleteProductOpen, setDeleteProductId, row.original.id)} />
         </div>
       )
     },
