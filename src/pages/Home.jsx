@@ -48,7 +48,7 @@ const ProductCard = ({img_url, price, name, id, isSelected, ...props}) => {
 
 const Drawer = ({newOrder, setNewOrder}) => {
   return (
-    <div className='rounded-t-2xl p-5 border-2 -mx-5 md:mx-0 bg-sidebar-accent gap-3 flex flex-col items-center pb-15'>
+    <div className='rounded-t-2xl p-5 border-2 -mx-5 md:mx-0 bg-sidebar-accent gap-3 flex flex-col items-center pb-20'>
       <div className='max-h-40 overflow-auto flex flex-col gap-2 w-full'>
         {newOrder.map(order => (
           <Item key={order.productId} variant='outline' className='h-20 w-full'>
