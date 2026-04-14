@@ -48,23 +48,23 @@ const ProductCard = ({img_url, price, name, id, isSelected, ...props}) => {
 
 const Drawer = ({newOrder, setNewOrder}) => {
   return (
-    <div className='rounded-t-2xl p-5 border-2 -mx-5 md:mx-0 bg-sidebar-accent gap-3 flex flex-col items-center'>
-      <div className='max-h-80 overflow-auto flex flex-col gap-2 w-full'>
+    <div className='rounded-t-2xl p-5 border-2 -mx-5 md:mx-0 bg-sidebar-accent gap-3 flex flex-col items-center pb-15'>
+      <div className='max-h-40 overflow-auto flex flex-col gap-2 w-full'>
         {newOrder.map(order => (
           <Item key={order.productId} variant='outline' className='h-20 w-full'>
             <ItemMedia className='h-full'>
-              <img className='h-full aspect-square rounded-md object-cover' src={products.find(product => product.id === order.productId).img_url} alt="" />
+              <img className='h-1/2 aspect-square rounded-md object-cover' src={products.find(product => product.id === order.productId).img_url} alt="" />
             </ItemMedia>
             <ItemContent>
-              <ItemTitle>{products.find(product => product.id === order.productId).name}</ItemTitle>
-              <ItemDescription>
+              <ItemTitle className='text-xs'>{products.find(product => product.id === order.productId).name}</ItemTitle>
+              <ItemDescription className='text-xs'>
                 {products.find(product => product.id === order.productId).price}
               </ItemDescription>
             </ItemContent>
-            <ItemActions>
+            <ItemActions className='gap-1'>
               {
                 order.amount > 1 
-                ? <Button onClick={() => setNewOrder(prev => prev.map(item => item.productId === order.productId ? {...item, amount: item.amount - 1} : item))}><Minus/></Button> 
+                ? <Button onClick={() => setNewOrder(prev => prev.map(item => item.productId === order.productId ? {...item, amount: item.amount - 1} : item))}><Minus /></Button> 
                 : <Button variant='outline'><Minus/></Button>
               }
               
